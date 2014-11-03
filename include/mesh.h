@@ -11,13 +11,14 @@ public:
 		Vec3 normal;
 	};
 
+	const unsigned numVert, numInd;
 	Vertex* vertices;
 	Index* indices;
 
 	Mesh(unsigned numVertices, unsigned numIndices);
 	~Mesh();
 
-	static Mesh* sphere(int r, int c);
+	static Mesh* sphere(float radius, unsigned r, unsigned c);
 };
 
 #endif //MESH_H

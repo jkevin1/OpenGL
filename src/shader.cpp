@@ -1,4 +1,6 @@
+#include <string>
 #include <fstream>
+//#include <iostream>
 #include <stdio.h>
 #include <cstdlib>
 #include "shader.h"
@@ -6,27 +8,26 @@
 GLuint loadShader(const char* filename, GLenum type) {
     printf("Loading shader: %s\n", filename);
     //open the file and calculate the length of the file
-    std::ifstream file;
-    file.open(filename, std::ios::in);
-    if (!file || !file.good()) {
-        printf("Error opening file\n");
-        return 0;
-    }
-    file.seekg(0, std::ios::end);
-    std::size_t len = file.tellg();
-    file.seekg(0, std::ios::beg);
+	std::string content;
+	std::ifstream fileStream(filename, std::ios::in);
 
-    //read the data from the file into a buffer
-    char* src = (char*)malloc(len + 1);
-    file.read(src, len);
-    file.close();
-    src[len] = '\0';
+	if (!fileStream.is_open()) {
+		fprintf(stderr, "Failed to open file\n");
+	}
+
+	std::string line = "";
+	while (!fileStream.eof()) {
+		std::getline(fileStream, line);
+		content.append(line + "\n");
+	}
+
+	fileStream.close();
 
     //create and compile the shader
     GLuint id = glCreateShader(type);
-    glShaderSource(id, 1, (const char**)&src, NULL);
+	const char* src = content.c_str();
+    glShaderSource(id, 1, &src, NULL);
     glCompileShader(id);
-    free(src);
 
     GLint compiled;
     glGetShaderiv(id, GL_COMPILE_STATUS, &compiled);
