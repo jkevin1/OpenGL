@@ -15,7 +15,7 @@ void main() {
 	
 	float diff = 0.8 * max(0, dot(L, worldNorm));
 	float spec = pow(max(0, dot(H, worldNorm)), 32);
-	spec *= (spec > 0.4)? 1.0 : 0.0;
+	//spec *= (spec > 0.4)? 1.0 : 0.0;
 	
 	float edge = (dot(V, worldNorm) >  0.2) ? 1 : 0;
 	vec3 ambClr = vec3(0, 0.1, 0.1);
