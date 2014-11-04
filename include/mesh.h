@@ -5,20 +5,22 @@
 
 class Mesh {
 public:
-	typedef unsigned int Index;
+	struct Triangle {
+		unsigned a, b, c;
+	};
 	struct Vertex {
 		Vec3 position;
 		Vec3 normal;
 	};
 
-	const unsigned numVert, numInd;
+	const unsigned numVert, numTri;
 	Vertex* vertices;
-	Index* indices;
+	Triangle* triangles;
 
-	Mesh(unsigned numVertices, unsigned numIndices);
+	Mesh(unsigned numVertices, unsigned numTriangles);
 	~Mesh();
 
-	static Mesh* sphere(float radius, unsigned r, unsigned c);
+	static Mesh* sphere(float radius, unsigned rows, unsigned columns);
 };
 
 #endif //MESH_H
